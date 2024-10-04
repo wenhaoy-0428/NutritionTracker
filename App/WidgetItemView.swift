@@ -32,65 +32,72 @@ struct WidgetItemView: View {
         case Utility
     }
 
+    private var clipShape: some Shape {
+        RoundedRectangle(
+            cornerRadius: 10
+        )
+    }
+
     var body: some View {
 
-        VStack {
-            HStack(spacing: 1) {
-                Text(self.icon)
-                Text(self.title)
-                    .foregroundColor(.white)
-                    .font(.title3)
-                    .bold()
+        ZStack {
+            clipShape
+                .shadow(radius: 3, y: 3)
 
-                Spacer()
-            }
-            .frame(maxWidth: .infinity)
+            VStack {
+                HStack(spacing: 1) {
+                    Text(self.icon)
+                    Text(self.title)
+                        .foregroundColor(.white)
+                        .font(.title3)
+                        .bold()
 
-            Spacer()
-
-            HStack(spacing: 3) {
-                Spacer()
-                Text("\(self.validityDate)")
-                    .foregroundColor(
-                        validityColors[
-                            min(validityDate, validityColors.count - 1)]
-                    )
-                    .font(.title2)
-                    .bold()
-
-                if self.validityDate < 0 {
-                    Text("Expired")
-                        .foregroundColor(.red)
-                } else {
-                    Text("\(self.validityDate > 1 ? "days" : "day")")
-                        .italic()
+                    Spacer()
                 }
+                .frame(maxWidth: .infinity)
 
+                Spacer()
+
+                HStack(spacing: 3) {
+                    Spacer()
+                    Text("\(self.validityDate)")
+                        .foregroundColor(
+                            validityColors[
+                                min(validityDate, validityColors.count - 1)]
+                        )
+                        .font(.title2)
+                        .bold()
+
+                    if self.validityDate < 0 {
+                        Text("Expired")
+                            .foregroundColor(.red)
+                    } else {
+                        Text("\(self.validityDate > 1 ? "days" : "day")")
+                            .italic()
+                    }
+
+                }
+                .foregroundColor(.white)
             }
-            .foregroundColor(.white)
+            .padding(5)
+            .background(Color.green)
+            .clipShape(self.clipShape)
+            .contentShape(ContentShapeKinds.contextMenuPreview, self.clipShape)
+            .contextMenu {
+                Button {
+                    // Add this item to a list of favorites.
+                } label: {
+                    Label("Add to favorite", systemImage: "heart")
+                }
+                Button {
+                    // Open Maps and center it on this item.
+                } label: {
+                    Label("More", systemImage: "ellipsis")
+                }
+            }
         }
-        .padding(5)
-        
         .frame(width: 150, height: 70)
-        .cornerRadius(10)
-        .padding()
-        .contentShape(ContentShapeKinds.contextMenuPreview, RoundedRectangle(cornerRadius: 10))
-        .contextMenu {
-            Button {
-                        // Add this item to a list of favorites.
-                    } label: {
-                        Label("Add to Favorites", systemImage: "heart")
-                    }
-                    Button {
-                        // Open Maps and center it on this item.
-                    } label: {
-                        Label("Show in Maps", systemImage: "mappin")
-                    }
-        }
-        
-        
-        
-        
+
     }
 }
 
