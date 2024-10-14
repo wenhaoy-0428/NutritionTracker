@@ -6,13 +6,14 @@
 //
 
 import SwiftUI
+import SwiftData
 
 @main
 struct AppApp: App {
     var body: some Scene {
         WindowGroup {
-//            ContentView()
-            WidgetItemView(title: "Tomato", icon: "\u{1F345}", category: .Grocery)
+            MainView()
+                .modelContainer(for: [Intake.self, Nutrient.self, Food.self])
         }
     }
 }
