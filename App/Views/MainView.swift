@@ -17,12 +17,18 @@ struct MainView: View {
     @Query private var nutrients: [Nutrient]
     @Query private var foods: [Food]
     
-//    let nutritions: [NutrientSummary] = [
-//        NutrientSummary(kind: "Calorie", icon: "🔥", description: "", targetIntake: 2400, currentIntake: 300, unit: "KCAL"),
-//        NutrientSummary(kind: "Protein", icon: "🍳", description: "", targetIntake: 2400, currentIntake: 300, unit: "g"),
-//    ]
-//
+    @State var showSheet: Bool = false
     
+    func initNutrient() {
+        if (nutrients.isEmpty) {
+            context.insert(Nutrient(category: .protein, icon: "", information: "", targetIntake: 2400, unit: "mg"))
+            context.insert(Nutrient(category: .calorie, icon: "", information: "", targetIntake: 2400, unit: "mg"))
+        }
+        if foods.isEmpty {
+            context.insert(Predefined.Foods.Apple)
+            context.insert(Predefined.Foods.Banana)
+        }
+    }
     
     let columns = [GridItem(.flexible(), spacing: 5), GridItem(.flexible(), spacing: 5)]
     
@@ -32,46 +38,48 @@ struct MainView: View {
                 ForEach(nutrients, id: \.self) { nutrient in
                     NutritionCardView(for: nutrient, intakes: intakes)
                 }
-                ForEach(foods, id: \.self) { food in
-                    Text(food.name)
+                Button {
+                    showSheet.toggle()
+                } label: {
+                    Text("Add")
                 }
+
             }.padding(5)
-            
-            Button {
-                context.insert(Nutrient(category: .protein, icon: "", information: "", targetIntake: 2400, unit: "mg"))
-                let f = Food(name: "Apple", information: "", nutrition: [.protein: 0.3])
-                context.insert(f)
-                context.insert(Intake(timestamp: Date(), food: f, amount: 0.3))
-            } label: {
-                Text("Add")
-            }
+                .sheet(isPresented: $showSheet) {
+                    IntakeInsertView()
+                }
+        }.onAppear {
+            initNutrient()
         }
+        
     }
 }
 
-// https://developer.apple.com/videos/play/wwdc2023/10154?time=330
-@MainActor
-let previewContainer: ModelContainer = {
-    
-    var sampleIntakes = [
-        Intake(timestamp: Date(), food: Food(name: "Apple", information: "", nutrition: [:]), amount: 0.3),
-        Intake( timestamp: Date(), food: Food(name: "Banana", information: "", nutrition: [:]), amount: 0.3)
-    ]
-    
-    do {
-        let container = try ModelContainer(for: Intake.self, Nutrient.self)
-        
-        for intake in sampleIntakes {
-            container.mainContext.insert(intake)
-        }
-        container.mainContext.insert(Nutrient(category: .protein, icon: "", information: "", targetIntake: 2400, unit: "mg"))
-        return container
-    } catch {
-        fatalError("Failed to create container")
-    }
-}()
+
 
 #Preview {
+    // https://developer.apple.com/videos/play/wwdc2023/10154?time=330
+//    @MainActor
+    let previewContainer: ModelContainer = {
+        
+        var sampleIntakes = [
+            Intake(timestamp: Date(), food: Predefined.Foods.Apple, amount: 0.3),
+            Intake( timestamp: Date(), food: Predefined.Foods.Banana, amount: 0.3)
+        ]
+        
+        do {
+            let container = try ModelContainer(for: Intake.self, Nutrient.self)
+            
+            for intake in sampleIntakes {
+                container.mainContext.insert(intake)
+            }
+            container.mainContext.insert(Nutrient(category: .protein, icon: "", information: "", targetIntake: 2400, unit: "mg"))
+            return container
+        } catch {
+            fatalError("Failed to create container")
+        }
+    }()
+    
     MainView()
         .modelContainer(previewContainer)
 }

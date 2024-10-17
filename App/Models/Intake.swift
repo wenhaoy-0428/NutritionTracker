@@ -29,4 +29,8 @@ extension Intake {
             intake.timestamp >= start && intake.timestamp < end
           }
     }
+    
+    func getNutrition(for nutrientCategory: Nutrient.NutrientCategory) -> Double {
+        return self.amount * (self.food.nutrition[nutrientCategory] ?? 0)
+    }
 }
