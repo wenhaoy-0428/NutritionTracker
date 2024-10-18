@@ -19,13 +19,15 @@ class Nutrient {
         targetIntake * 0.85
     }
     var unit: String
+    var maxPerInake: Double
     
-    init(category: NutrientCategory, icon: String, information: String, targetIntake: Double, unit: String) {
+    init(category: NutrientCategory, icon: String, information: String, targetIntake: Double, unit: String, maxPerInake: Double) {
         self.category = category
         self.icon = icon
         self.information = information
         self.targetIntake = targetIntake
         self.unit = unit
+        self.maxPerInake = maxPerInake
     }
 }
 

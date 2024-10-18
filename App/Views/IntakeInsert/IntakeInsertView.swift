@@ -9,20 +9,8 @@ import SwiftUI
 import SwiftData
 
 struct IntakeInsertView: View {
-    
-    
     @State var selectedFood: Food? = nil
-    //    @Query var foods: [Food]
-    @State var foods: [Food] = [
-        Predefined.Foods.Cherry(),
-        Predefined.Foods.Cherry(),
-        Predefined.Foods.Cherry(),
-        Predefined.Foods.Cherry(),
-        Predefined.Foods.Cherry(),
-        Predefined.Foods.Cherry(),
-        Predefined.Foods.Cherry(),
-        Predefined.Foods.Cherry(),
-    ]
+    @Query var foods: [Food]
     var favorieFoods: [Food] {
         foods.filter { food in
             food.isFavorite
@@ -30,11 +18,7 @@ struct IntakeInsertView: View {
     }
     
     @State var searchText: String = ""
-    //    @Query var nutrients: [Nutrient]
-    var nutrients: [Nutrient] = [
-        Predefined.Nutrients.Calorie,
-        Predefined.Nutrients.Protein
-    ]
+    @Query var nutrients: [Nutrient]
     
     let layout = Array(repeating: GridItem(.flexible(), spacing: 0), count: 4)
     var body: some View {
@@ -42,10 +26,10 @@ struct IntakeInsertView: View {
             ZStack {
                 VStack{
                     List {
-                        if favorieFoods.isEmpty {
+                        if !favorieFoods.isEmpty {
                             Section(header: Text("Favorites")) {
                                 LazyVGrid(columns: layout, spacing: 10) {
-                                    ForEach(foods) {food in
+                                    ForEach(favorieFoods) {food in
                                         FavoriteSelectionView(selectedFood: $selectedFood, food: food)
                                     }
                                 }
@@ -97,40 +81,59 @@ struct IntakeInsertView: View {
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(.background.secondary)
-            .onAppear {
-                print()
-            }
         }
         .searchable(text: $searchText)
         .searchSuggestions {
-            ForEach (foods) {food in
-                HStack {
-                    Image(systemName: "apple.logo")
-                    Button {
-                        selectedFood = food
-                    } label: {
-                        VStack(alignment: .leading) {
-                            Text(food.name)
-                                .foregroundStyle(.primary)
-                            Text(food.group.rawValue)
-                                .foregroundStyle(.secondary)
+            if foods.isEmpty {
+                HStack (alignment: .center){
+                    Spacer()
+                    VStack {
+                        Image(systemName: "refrigerator")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(height: 70)
+                        Text("No foods were found")
+                            .font(.title)
+                            .bold()
+                        NavigationLink("Add a new food") {
+                            FoodUpdateView()
                         }
-                    }.tint(Color.primary)
-                        .swipeActions {
-                            Button {
-                                food.isFavorite.toggle()
-                                print(food.isFavorite)
-                            } label: {
-                                Image(systemName: food.isFavorite ? "heart.slash.fill" : "heart")
+                    }
+                    .buttonStyle(.bordered)
+                    Spacer()
+                }
+                .listRowSeparator(.hidden)
+                .frame(height: 300)
+                
+                
+                
+            } else {
+                ForEach (foods) {food in
+                    HStack {
+                        Image(systemName: "apple.logo")
+                        Button {
+                            selectedFood = food
+                        } label: {
+                            VStack(alignment: .leading) {
+                                Text(food.name)
+                                    .foregroundStyle(.primary)
+                                Text(food.group.rawValue)
+                                    .foregroundStyle(.secondary)
                             }
-                            .tint(.pink)
-                            
-                            Button {
-                                // TODO: NavigationLink(FoodUpdateView)
-                            } label: {
-                                Text("Edit")
+                        }.tint(Color.primary)
+                            .swipeActions {
+                                Button {
+                                    food.isFavorite.toggle()
+                                } label: {
+                                    Image(systemName: food.isFavorite ? "heart.slash.fill" : "heart")
+                                }
+                                .tint(.pink)
+                                
+                                NavigationLink("Edit") {
+                                    FoodUpdateView(for: food)
+                                }
                             }
-                        }
+                    }
                 }
             }
         }

@@ -18,20 +18,21 @@ struct MainView: View {
     @Query private var foods: [Food]
     
     @State var showSheet: Bool = false
+    @State var showInsertSheet: Bool = false
     
     func initNutrient() {
         if (nutrients.isEmpty) {
-            context.insert(Nutrient(category: .protein, icon: "", information: "", targetIntake: 2400, unit: "mg"))
-            context.insert(Nutrient(category: .calorie, icon: "", information: "", targetIntake: 2400, unit: "mg"))
+            context.insert(Predefined.Nutrients.Protein)
+            context.insert(Predefined.Nutrients.Calorie)
         }
         if foods.isEmpty {
             context.insert(Predefined.Foods.Apple)
             context.insert(Predefined.Foods.Banana)
         }
     }
-    
+
     let columns = [GridItem(.flexible(), spacing: 5), GridItem(.flexible(), spacing: 5)]
-    
+
     var body: some View {
         ScrollView {
             LazyVGrid(columns: columns, spacing: 5) {
@@ -45,11 +46,11 @@ struct MainView: View {
                 }
 
             }.padding(5)
-                .sheet(isPresented: $showSheet) {
-                    IntakeInsertView()
-                }
         }.onAppear {
             initNutrient()
+        }
+        .sheet(isPresented: $showSheet) {
+            IntakeInsertView()
         }
         
     }
@@ -73,7 +74,7 @@ struct MainView: View {
             for intake in sampleIntakes {
                 container.mainContext.insert(intake)
             }
-            container.mainContext.insert(Nutrient(category: .protein, icon: "", information: "", targetIntake: 2400, unit: "mg"))
+            container.mainContext.insert(Predefined.Nutrients.Calorie)
             return container
         } catch {
             fatalError("Failed to create container")

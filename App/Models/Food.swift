@@ -29,12 +29,12 @@ class Food {
 }
 
 extension Food {
-    enum Group: String, Codable {
+    enum Group: String, Codable, CaseIterable {
         case meat
         case fruit
         case vagetable
         case dairy
-        case starc
+        case starch
         case protein
         case meal
         case drink
