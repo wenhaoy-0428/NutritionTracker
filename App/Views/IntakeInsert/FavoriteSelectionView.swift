@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct FavoriteSelectionView: View {
-    @Binding var selectedFood: Food?
+    @Environment(SheetData.self) var sheetData: SheetData
     let food: Food
         
     var body: some View {
@@ -26,13 +26,13 @@ struct FavoriteSelectionView: View {
             }
             .frame(width: 40, height: 40)
             .overlay {
-                if selectedFood == food {
+                if sheetData.selectedFood == food {
                     RoundedRectangle(cornerRadius: 3)
                         .stroke(.blue, lineWidth: 3)
                 }
             }
             .onTapGesture {
-                selectedFood = food
+                sheetData.selectedFood = food
             }
             Text(food.name)
                 .font(.caption)
@@ -41,7 +41,5 @@ struct FavoriteSelectionView: View {
 }
 
 #Preview {
-    @Previewable @State var temp: Food? = Predefined.Foods.Apple
-    var food: Food = Food(name: "Cherry", information: "", nutrition: [:], icon: "apple.logo", group: .fruit)
-    FavoriteSelectionView(selectedFood: $temp, food: food)
+    FavoriteSelectionView(food: Predefined.Foods.Apple)
 }

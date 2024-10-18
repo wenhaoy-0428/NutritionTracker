@@ -15,6 +15,7 @@ class Food {
     var isFavorite: Bool = false
     var icon: String
     var group: Group
+    // in gram
     
     init(name: String, information: String, nutrition: [Nutrient.NutrientCategory : Double], isFavorite: Bool? = false, icon: String, group: Group) {
         self.name = name

@@ -8,23 +8,26 @@
 import SwiftUI
 import SwiftData
 
+
 struct IntakeInsertView: View {
-    @State var selectedFood: Food? = nil
+    
     @Query var foods: [Food]
-    
+    @State var intakeAmount: Double = 100
     @State var searchText: String = ""
+    @State var searchFocus: Bool = false
     @Query var nutrients: [Nutrient]
+    @Environment(\.modelContext) var context
+    @Environment(\.dismiss) var dismiss
+    @Environment(\.dismissSearch) var dismissSearch
+    @Environment(SheetData.self) var sheetData: SheetData
+        
+    var numberFormatter: NumberFormatter = {
+        var nf = NumberFormatter()
+        nf.numberStyle = .decimal
+        return nf
+    }()
     
-    // Computed property for filtered suggestions
-    var filteredFoods: [Food] {
-        if searchText.isEmpty {
-            return foods
-        } else {
-            return foods.filter {
-                $0.name.lowercased().contains(searchText.lowercased()) || $0.group.rawValue.lowercased().contains(searchText.lowercased())
-            }
-        }
-    }
+    
     
     var favorieFoods: [Food] {
         foods.filter { food in
@@ -34,122 +37,104 @@ struct IntakeInsertView: View {
     
     let layout = Array(repeating: GridItem(.flexible(), spacing: 0), count: 4)
     var body: some View {
-        NavigationStack {
-            ZStack {
-                VStack{
-                    List {
-                        if !favorieFoods.isEmpty {
-                            Section(header: Text("Favorites")) {
-                                LazyVGrid(columns: layout, spacing: 10) {
-                                    ForEach(favorieFoods) {food in
-                                        FavoriteSelectionView(selectedFood: $selectedFood, food: food)
-                                    }
-                                }
-                            }
-                        }
-                        
-                        Section(header: Text("Nutrition")) {
-                            HStack {
-                                VStack {
-                                    Text(selectedFood?.name ?? "Food")
-                                        .font(.largeTitle)
-                                        .bold()
-                                    if let information = selectedFood?.information {
-                                        Text(information)
-                                    }
-                                }
-                                .foregroundStyle(Color.white)
-                                .frame(height: 80)
-                            }.frame(maxWidth: .infinity)
-                                .listRowSeparator(.hidden)
-                                .listRowBackground(
-                                    Image("apple")
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fill)
-                                )
-                            
-                            ForEach(nutrients) {nutrient in
-                                HStack {
-                                    Image(systemName: "apple.logo")
-                                    Text(nutrient.category.rawValue.capitalized)
-                                    Spacer()
-                                    if let nutrition = selectedFood?.nutrition[nutrient.category] {
-                                        Text(String(format: "%.1f", nutrition))
-                                    } else {
-                                        Text("-")
-                                    }
-                                    Text(nutrient.unit)
+        ZStack {
+            VStack{
+                List {
+                    // Favorites
+                    if !favorieFoods.isEmpty {
+                        Section(header: Text("Favorites")) {
+                            LazyVGrid(columns: layout, spacing: 10) {
+                                ForEach(favorieFoods) {food in
+                                    FavoriteSelectionView(food: food)
                                 }
                             }
                         }
                     }
                     
-                    Button {
-                        // TODO:
-                    } label: {
-                        Text("Add")
+                    // Nutrition display
+                    Section(header: Text("Nutrition")) {
+                        HStack {
+                            VStack {
+                                Text(sheetData.selectedFood?.name ?? "Food")
+                                    .font(.largeTitle)
+                                    .bold()
+                                if let information = sheetData.selectedFood?.information {
+                                    Text(information)
+                                }
+                            }
+                            .foregroundStyle(Color.white)
+                            .frame(height: 80)
+                        }.frame(maxWidth: .infinity)
+                            .listRowSeparator(.hidden)
+                            .listRowBackground(
+                                Image("apple")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fill)
+                            )
+                        
+                        HStack {
+                            Text("Amount")
+                            Spacer()
+                            TextField("g/ml", value: $intakeAmount, formatter: numberFormatter)
+                                .multilineTextAlignment(.trailing)
+                                .keyboardType(.decimalPad)
+                            
+                        }
+                        
+                        ForEach(nutrients) {nutrient in
+                            HStack {
+                                Image(systemName: "apple.logo")
+                                Text(nutrient.category.rawValue.capitalized)
+                                Spacer()
+                                if let nutrition = sheetData.selectedFood?.nutrition[nutrient.category]  {
+                                    Text(String(format: "%.1f", nutrition * intakeAmount / 100))
+                                } else {
+                                    Text("-")
+                                }
+                                Text(nutrient.unit)
+                            }
+                        }
                     }
                 }
             }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .background(.background.secondary)
         }
-        .searchable(text: $searchText, prompt: "Search Foods..")
-        .searchSuggestions {
-            if filteredFoods.isEmpty {
-                HStack (alignment: .center){
-                    Spacer()
-                    VStack {
-                        Image(systemName: "refrigerator")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(height: 70)
-                        Text("No food was found")
-                            .font(.title)
-                            .bold()
-                        NavigationLink("Add a new food") {
-                            FoodUpdateView()
-                        }
-                    }
-                    .buttonStyle(.bordered)
-                    Spacer()
-                }
-                .listRowSeparator(.hidden)
-                .frame(height: 300)
-    
-            } else {
-                ForEach (filteredFoods) {food in
-                    HStack {
-                        Image(systemName: "apple.logo")
-                        Button {
-                            selectedFood = food
-                        } label: {
-                            VStack(alignment: .leading) {
-                                Text(food.name)
-                                    .foregroundStyle(.primary)
-                                Text(food.group.rawValue)
-                                    .foregroundStyle(.secondary)
-                            }
-                        }.tint(Color.primary)
-                            .swipeActions {
-                                Button {
-                                    food.isFavorite.toggle()
-                                } label: {
-                                    Image(systemName: food.isFavorite ? "heart.slash.fill" : "heart")
-                                }
-                                .tint(.pink)
-                                
-                                NavigationLink("Edit") {
-                                    FoodUpdateView(for: food)
-                                }
-                            }
-                    }
-                }
+        .onAppear {
+            sheetData.dismissClosure = { dismissSearch() }
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .toolbar {
+            ToolbarItem {
+                Button {
+                    saveNewIntake()
+                    dismiss()
+                } label: {
+                    Text("Record")
+                }.disabled(sheetData.selectedFood == nil)
             }
         }
     }
 }
 
+extension IntakeInsertView {
+    func suggestionView() -> some View {
+        Group {
+            
+        }
+    }
+}
+
+extension IntakeInsertView {
+    func saveNewIntake() {
+        guard sheetData.selectedFood != nil else {
+            return
+        }
+        let newIntake = Intake(food: sheetData.selectedFood!, amount: intakeAmount)
+        context.insert(newIntake)
+    }
+}
+
 #Preview {
-    IntakeInsertView()
+    NavigationStack {
+        IntakeInsertView()
+    }
 }

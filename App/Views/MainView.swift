@@ -50,7 +50,7 @@ struct MainView: View {
             initNutrient()
         }
         .sheet(isPresented: $showSheet) {
-            IntakeInsertView()
+            IntakeInsertSheet()
         }
         
     }
@@ -64,8 +64,8 @@ struct MainView: View {
     let previewContainer: ModelContainer = {
         
         var sampleIntakes = [
-            Intake(timestamp: Date(), food: Predefined.Foods.Apple, amount: 0.3),
-            Intake( timestamp: Date(), food: Predefined.Foods.Banana, amount: 0.3)
+            Intake(food: Predefined.Foods.Apple, amount: 0.3),
+            Intake(food: Predefined.Foods.Banana, amount: 0.3)
         ]
         
         do {

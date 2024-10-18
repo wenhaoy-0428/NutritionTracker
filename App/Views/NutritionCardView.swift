@@ -49,7 +49,7 @@ struct NutritionCardView: View {
             }
             .frame(height: 100)
             .sheet(isPresented: $openDetail) {
-                NutritionDetailSheet
+                NutritionDetailSheet()
                 .presentationDetents([.medium, .large])
             }
         }.foregroundStyle(.primary)
@@ -98,42 +98,58 @@ extension NutritionCardView {
 
 extension NutritionCardView {
     
-    var NutritionDetailSheet: some View {
-        ScrollView {
-            ForEach(intakes) { intake in
+    func NutritionDetailSheet() -> some View {
+        Group {
+            if intakes.isEmpty {
                 VStack {
-                    HStack() {
-                        Circle()
-                            .foregroundStyle(.secondary)
-                            .frame(width: 40, height: 40)
-                            .overlay {
-                                Text("\(String(format: "%.0f", intake.amount * (intake.food.nutrition[nutrient.category] ?? 0) / getTotalIntake() * 100))")
-                                    .bold()
-                                    .foregroundStyle(colorScheme == .dark ? Color.black.opacity(0.5): .white)
-                                    .font(.title3)
+                    Spacer()
+                    Image("bento-box")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 80)
+                    Text("You haven't eaten anything yet")
+                        .font(.title2)
+                        .bold()
+                    Spacer()
+                    Spacer()
+                }
+            } else {
+                ScrollView {
+                    ForEach(intakes) { intake in
+                        VStack {
+                            HStack() {
+                                Circle()
+                                    .foregroundStyle(.secondary)
+                                    .frame(width: 40, height: 40)
+                                    .overlay {
+                                        Text("\(String(format: "%.0f", intake.amount * (intake.food.nutrition[nutrient.category] ?? 0) / getTotalIntake() * 100))")
+                                            .bold()
+                                            .foregroundStyle(colorScheme == .dark ? Color.black.opacity(0.5): .white)
+                                            .font(.title3)
+                                    }
+                                VStack(alignment: .leading) {
+                                    Text(intake.food.name)
+                                        .font(.headline)
+                                    Text("\(String(format: "%.1f", intake.amount * (intake.food.nutrition[nutrient.category] ?? 0)))/\(String(format: "%.0f", nutrient.targetIntake))\(nutrient.unit)")
+                                        .bold()
+                                        .foregroundStyle(getDisplayColor(for: intake.food.name))
+                                }
+                                
+                                Spacer()
+                                
                             }
-                        VStack(alignment: .leading) {
-                            Text(intake.food.name)
-                                .font(.headline)
-                            Text("\(String(format: "%.1f", intake.amount * (intake.food.nutrition[nutrient.category] ?? 0)))/\(String(format: "%.0f", nutrient.targetIntake))\(nutrient.unit)")
-                                .bold()
-                                .foregroundStyle(getDisplayColor(for: intake.food.name))
                         }
-                        
-                        Spacer()
-                        
+                        .padding()
+                        .background(
+                            RoundedRectangle(cornerRadius: 10)
+                                .foregroundStyle(colorScheme == .dark ? Color(red: 0.1, green: 0.1, blue: 0.1) : .white)
+                                .shadow(radius: 3, y:2)
+                        ).padding(3)
                     }
                 }
                 .padding()
-                .background(
-                    RoundedRectangle(cornerRadius: 10)
-                        .foregroundStyle(colorScheme == .dark ? Color(red: 0.1, green: 0.1, blue: 0.1) : .white)
-                        .shadow(radius: 3, y:2)
-                ).padding(3)
             }
         }
-        .padding()
-        
     }
 }
 

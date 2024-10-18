@@ -13,8 +13,8 @@ class Intake {
     var food: Food
     var amount: Double
     
-    init(timestamp: Date, food: Food, amount: Double) {
-        self.timestamp = timestamp
+    init(food: Food, amount: Double) {
+        self.timestamp = Date()
         self.food = food
         self.amount = amount
     }
