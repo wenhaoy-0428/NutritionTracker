@@ -11,14 +11,26 @@ import SwiftData
 struct IntakeInsertView: View {
     @State var selectedFood: Food? = nil
     @Query var foods: [Food]
+    
+    @State var searchText: String = ""
+    @Query var nutrients: [Nutrient]
+    
+    // Computed property for filtered suggestions
+    var filteredFoods: [Food] {
+        if searchText.isEmpty {
+            return foods
+        } else {
+            return foods.filter {
+                $0.name.lowercased().contains(searchText.lowercased()) || $0.group.rawValue.lowercased().contains(searchText.lowercased())
+            }
+        }
+    }
+    
     var favorieFoods: [Food] {
         foods.filter { food in
             food.isFavorite
         }
     }
-    
-    @State var searchText: String = ""
-    @Query var nutrients: [Nutrient]
     
     let layout = Array(repeating: GridItem(.flexible(), spacing: 0), count: 4)
     var body: some View {
@@ -82,9 +94,9 @@ struct IntakeInsertView: View {
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(.background.secondary)
         }
-        .searchable(text: $searchText)
+        .searchable(text: $searchText, prompt: "Search Foods..")
         .searchSuggestions {
-            if foods.isEmpty {
+            if filteredFoods.isEmpty {
                 HStack (alignment: .center){
                     Spacer()
                     VStack {
@@ -92,7 +104,7 @@ struct IntakeInsertView: View {
                             .resizable()
                             .scaledToFit()
                             .frame(height: 70)
-                        Text("No foods were found")
+                        Text("No food was found")
                             .font(.title)
                             .bold()
                         NavigationLink("Add a new food") {
@@ -104,11 +116,9 @@ struct IntakeInsertView: View {
                 }
                 .listRowSeparator(.hidden)
                 .frame(height: 300)
-                
-                
-                
+    
             } else {
-                ForEach (foods) {food in
+                ForEach (filteredFoods) {food in
                     HStack {
                         Image(systemName: "apple.logo")
                         Button {
