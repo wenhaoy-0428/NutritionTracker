@@ -64,9 +64,8 @@ extension NutritionCardView {
         VStack(spacing: 10) {
             GeometryReader { geometry in
                 ZStack(alignment: .leading) {
-                    ProgressView(value: currentIntake / nutrient.maxIntake) {
-                        
-                    }.tint(getProgressBarColor())
+                    ProgressView(value: min(1, currentIntake / nutrient.maxIntake)) {}
+                        .tint(getProgressBarColor())
                     Capsule()
                         .rotation(Angle(degrees: 90))
                         .foregroundStyle(.secondary)

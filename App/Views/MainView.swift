@@ -17,9 +17,6 @@ struct MainView: View {
     @Query private var nutrients: [Nutrient]
     @Query private var foods: [Food]
     
-    @State var showSheet: Bool = false
-    @State var showInsertSheet: Bool = false
-    
     func initNutrient() {
         if (nutrients.isEmpty) {
             context.insert(Predefined.Nutrients.Protein)
@@ -30,29 +27,21 @@ struct MainView: View {
             context.insert(Predefined.Foods.Banana)
         }
     }
-
+    
     let columns = [GridItem(.flexible(), spacing: 5), GridItem(.flexible(), spacing: 5)]
-
+    
     var body: some View {
-        ScrollView {
-            LazyVGrid(columns: columns, spacing: 5) {
-                ForEach(nutrients, id: \.self) { nutrient in
-                    NutritionCardView(for: nutrient, intakes: intakes)
-                }
-                Button {
-                    showSheet.toggle()
-                } label: {
-                    Text("Add")
-                }
-
-            }.padding(5)
-        }.onAppear {
-            initNutrient()
+        MainTabView {
+            ScrollView {
+                LazyVGrid(columns: columns, spacing: 5) {
+                    ForEach(nutrients, id: \.self) { nutrient in
+                        NutritionCardView(for: nutrient, intakes: intakes)
+                    }
+                }.padding(5)
+            }.onAppear {
+                initNutrient()
+            }
         }
-        .sheet(isPresented: $showSheet) {
-            IntakeInsertSheet()
-        }
-        
     }
 }
 
@@ -60,7 +49,7 @@ struct MainView: View {
 
 #Preview {
     // https://developer.apple.com/videos/play/wwdc2023/10154?time=330
-//    @MainActor
+    //    @MainActor
     let previewContainer: ModelContainer = {
         
         var sampleIntakes = [
