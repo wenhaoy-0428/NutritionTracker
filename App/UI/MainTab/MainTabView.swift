@@ -23,14 +23,14 @@ struct MainTabView<Content: View>: View {
         ZStack {
             Color(UIColor.secondarySystemBackground)
                 .ignoresSafeArea()
-            VStack(spacing: 0) {
+            ZStack(alignment: .bottom) {
                 // Content
                 content
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                 
-                Spacer()
+//                Spacer()
                 // TabBar
-                MainTabBarView(tabs: tabs)
+                MainTabBarView(tabs: tabs, selection: $selection)
             }
             .ignoresSafeArea(.all, edges: .bottom)
         } // Listen to PreferenceKey to update registered tabs
@@ -42,15 +42,26 @@ struct MainTabView<Content: View>: View {
 
 struct MainTabBarView: View {
     let tabs: [MainTabBarItem]
+    @Binding var selection: MainTabBarItem
     
     var body: some View {
         if !tabs.isEmpty {
             Grid(alignment: .bottom, horizontalSpacing: 60, verticalSpacing: 0) {
                 GridRow {
-                    tabs[0].tabView
+                    Button {
+                        selection = tabs[0]
+                    } label: {
+                        tabs[0].tabView
+                    }
                     MainInsertButton()
                         .offset(y: -25)
-                    tabs[1].tabView
+                    
+                    Button {
+                        selection = tabs[1]
+                    } label: {
+                        tabs[1].tabView
+                    }
+                    
                 }
             }
             .frame(maxWidth: .infinity)
@@ -76,10 +87,10 @@ struct ArcShape: Shape {
 
 
 #Preview {
+    @Previewable @State var selection: MainTabBarItem = .home
     let tabs: [MainTabBarItem] = [.home, .misc]
-    let selection: MainTabBarItem = .home
     
-    MainTabView(selection: .constant(tabs.first!)) {
+    MainTabView(selection: $selection) {
         Color.red
             .mainTabbarItem(tab: .home, selection: selection)
         

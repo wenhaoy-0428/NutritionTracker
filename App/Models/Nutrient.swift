@@ -18,10 +18,10 @@ class Nutrient {
     var minIntake: Double {
         targetIntake * 0.85
     }
-    var unit: String
+    var unit: Unit
     var maxPerInake: Double
     
-    init(category: NutrientCategory, icon: String, information: String, targetIntake: Double, unit: String, maxPerInake: Double) {
+    init(category: NutrientCategory, icon: String, information: String, targetIntake: Double, unit: Unit, maxPerInake: Double) {
         self.category = category
         self.icon = icon
         self.information = information
@@ -35,5 +35,26 @@ extension Nutrient {
     enum NutrientCategory: String, CaseIterable, Codable {
         case calorie
         case protein
+        case total_fat = "Total Fat"
+        case saturated_fat = "Saturated Fat"
+        case trans_fat = "Trans Fat"
+        case cholesterol
+        case sodium
+        case total_carbohydrate
+        case dietary_fiber
+        case total_sugars
+        case added_sugars
+        case vitamin_c
+        case vitamin_d
+        case iron
+        case calcium
+        case potassium
+        case phosphorus
+    }
+    
+    enum Unit: String, Codable, CaseIterable {
+        case g
+        case mg
+        case kcal
     }
 }

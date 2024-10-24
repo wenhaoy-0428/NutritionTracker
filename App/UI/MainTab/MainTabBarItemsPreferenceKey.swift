@@ -22,13 +22,18 @@ struct MainTabBarItemViewModifier: ViewModifier {
     // init
     let tab: MainTabBarItem
     let selection: MainTabBarItem
+    
+    
     func body(content: Content) -> some View {
-        if selection == tab {
-            content
-                .preference(key: MainTabBarItemsPreferenceKey.self, value: [tab])
-        } else {
-            EmptyView()
-        }
+        Group {
+            if selection == tab {
+                content
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+            } else {
+                Color.clear.frame(width: 0, height: 0)
+                    .background(.green)
+            }
+        }.preference(key: MainTabBarItemsPreferenceKey.self, value: [tab])
     }
 }
 

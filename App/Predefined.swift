@@ -14,15 +14,14 @@ struct Predefined {
         static func Cherry() -> Food {
             Food(name: "Cherry", information: "This is a cherry", nutrition: [.protein:0], icon: "apple.logo", group: .fruit)
         }
-        
         static var foodIcons: [String] = [
             "apple.logo"
         ]
     }
     
     struct Nutrients {
-        static var Protein: Nutrient = Nutrient(category: .protein, icon: "", information: "This is protein", targetIntake: 60, unit: "g", maxPerInake: 100)
-        static var Calorie = Nutrient(category: .calorie, icon: "", information: "This is calorie", targetIntake: 2000, unit: "Kcal", maxPerInake: 4000)
+        static var Protein: Nutrient = Nutrient(category: .protein, icon: "", information: "This is protein", targetIntake: 60, unit: .g, maxPerInake: 100)
+        static var Calorie = Nutrient(category: .calorie, icon: "", information: "This is calorie", targetIntake: 2000, unit: .kcal, maxPerInake: 4000)
         
     }
 }
