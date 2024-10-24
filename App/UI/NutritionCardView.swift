@@ -81,7 +81,7 @@ extension NutritionCardView {
                     Text("\(String(format: "%.1f", currentIntake))")
                     Text("/")
                     Text("\(String(format: "%.0f", nutrient.targetIntake))")
-                    Text(nutrient.unit)
+                    Text(nutrient.unit.rawValue)
                         .font(.caption)
                         .bold()
                         .foregroundStyle(.orange)

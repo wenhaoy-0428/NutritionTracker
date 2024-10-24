@@ -111,7 +111,7 @@ extension FoodUpdateView {
     func NutrientInputField(value: Binding<Double?>, for nutrient: Nutrient) -> some View {
         return HStack {
             Text(nutrient.category.rawValue.capitalized)
-            TextField(nutrient.unit, value: value, formatter: numberFormatter)
+            TextField(nutrient.unit.rawValue, value: value, formatter: numberFormatter)
                 .multilineTextAlignment(.trailing)
                 .keyboardType(.decimalPad)
         }

@@ -91,7 +91,7 @@ struct IntakeInsertView: View {
                                 } else {
                                     Text("-")
                                 }
-                                Text(nutrient.unit)
+                                Text(nutrient.unit.rawValue)
                             }
                         }
                     }

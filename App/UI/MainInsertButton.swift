@@ -17,7 +17,6 @@ struct MainInsertButton: View {
         label: {
             ZStack {
                 Circle()
-                    
                 Image(systemName: "plus")
                     .resizable()
                     .padding(8)
