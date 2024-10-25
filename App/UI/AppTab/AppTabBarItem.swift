@@ -8,12 +8,12 @@
 import SwiftUI
 
 enum AppTabBarItem{
-    case home, misc
+    case main, misc
     
     @ViewBuilder var tabView: some View {
         switch self {
-        case .home: Text("Home").frame(width: 50, height: 50)
-        case .misc: Text("Misc").frame(width: 50, height: 50)
+        case .main: MainTabBarItem()
+        case .misc: MiscTabBarItem()
         }
     }
 }
@@ -33,10 +33,21 @@ struct AppTabBarItemView<Content: View>: View{
 
     var body: some View {
         label
-            .frame(width: 50, height: 50)
-            .foregroundStyle(selected ? Color.blue : Color.gray)
-            .onTapGesture {
-                action()
-            }
+        .frame(height: 50)
+        .clipped()
+        .foregroundStyle(selected ? Color.blue : Color.gray)
+        .onTapGesture {
+            action()
+        }
     }
+}
+
+#Preview {
+    HStack {
+        AppTabBarItemView(selected: true) {
+            //
+        } label: {
+            MainTabBarItem()
+        }
+    }.background(Color.green)
 }

@@ -1,5 +1,5 @@
 //
-//  MainInsertButton.swift
+//  InsertTabBarItem.swift
 //  App
 //
 //  Created by Wenhao Yan on 2024/10/19.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct MainInsertButton: View {
+struct InsertTabBarItem: View {
     @State var showSheet: Bool = false
     
     var body: some View {
@@ -31,5 +31,5 @@ struct MainInsertButton: View {
 }
 
 #Preview {
-    MainInsertButton()
+    InsertTabBarItem()
 }

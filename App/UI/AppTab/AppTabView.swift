@@ -40,12 +40,18 @@ struct AppTabView<Content: View>: View {
 
 
 #Preview {
-    @Previewable @State var selection: AppTabBarItem = .home
+    @Previewable @State var selection: AppTabBarItem = .main
     let tabs: [AppTabBarItem] = []
     
     AppTabView(selection: $selection) {
         Color.red
-            .appTabBarItem(tab: .home, selection: selection)
+            .appTabBarItem(tab: .main, selection: selection)
+        
+        Color.green
+            .appTabBarItem(tab: .misc, selection: selection)
+        
+        Color.green
+            .appTabBarItem(tab: .misc, selection: selection)
         
         Color.green
             .appTabBarItem(tab: .misc, selection: selection)

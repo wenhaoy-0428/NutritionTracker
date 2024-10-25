@@ -14,20 +14,21 @@ struct AppTabBarView: View {
     var body: some View {
         if !tabs.isEmpty {
             ZStack {
-                MainInsertButton()
-                    .offset(y: -25)
+                InsertTabBarItem()
+                    .offset(y: -30)
                 
-                HStack(spacing: 150) {
+                HStack(spacing: 25) {
+                    Spacer()
                     ForEach(tabs, id: \.self) { tab in
                         AppTabBarItemView(selected: selection == tab) {
                             selection = tab
                         } label: {
                             tab.tabView
                         }
+                        Spacer()
                     }
-                }.frame(maxWidth: .infinity)
+                }.frame(maxWidth: .infinity).padding(5)
             }
-
             .frame(maxWidth: .infinity)
             .padding(.vertical, 35)
             .background(Color(UIColor.systemBackground))
@@ -43,8 +44,17 @@ struct ArcShape: Shape {
             path.addLine(to: CGPoint(x: 0, y: rect.height))
             path.addLine(to: CGPoint(x: rect.width, y: rect.height))
             path.addLine(to: CGPoint(x: rect.width, y: 35))
-            
             path.addArc(center: CGPoint(x: rect.width / 2, y: 35), radius: 35, startAngle: .zero, endAngle: .init(degrees: 180), clockwise: true)
         }
     }
+}
+
+#Preview {
+    let tabs: [AppTabBarItem] = [.main, .misc]
+    VStack {
+        Spacer()
+        AppTabBarView(tabs: tabs, selection: .constant(.main))
+    }
+    .ignoresSafeArea()
+    .background(Color.red)
 }
