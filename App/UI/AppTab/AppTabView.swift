@@ -27,8 +27,6 @@ struct AppTabView<Content: View>: View {
                 // Content
                 content
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
-                
-//                Spacer()
                 // TabBar
                 AppTabBarView(tabs: tabs, selection: $selection)
             }
@@ -43,13 +41,13 @@ struct AppTabView<Content: View>: View {
 
 #Preview {
     @Previewable @State var selection: AppTabBarItem = .home
-    let tabs: [AppTabBarItem] = [.home, .misc]
+    let tabs: [AppTabBarItem] = []
     
     AppTabView(selection: $selection) {
         Color.red
-            .mainTabbarItem(tab: .home, selection: selection)
+            .appTabBarItem(tab: .home, selection: selection)
         
         Color.green
-            .mainTabbarItem(tab: .misc, selection: selection)
+            .appTabBarItem(tab: .misc, selection: selection)
     }
 }

@@ -13,24 +13,21 @@ struct AppTabBarView: View {
     
     var body: some View {
         if !tabs.isEmpty {
-            Grid(alignment: .bottom, horizontalSpacing: 60, verticalSpacing: 0) {
-                GridRow {
-                    Button {
-                        selection = tabs[0]
-                    } label: {
-                        tabs[0].tabView
+            ZStack {
+                MainInsertButton()
+                    .offset(y: -25)
+                
+                HStack(spacing: 150) {
+                    ForEach(tabs, id: \.self) { tab in
+                        AppTabBarItemView(selected: selection == tab) {
+                            selection = tab
+                        } label: {
+                            tab.tabView
+                        }
                     }
-                    MainInsertButton()
-                        .offset(y: -25)
-                    
-                    Button {
-                        selection = tabs[1]
-                    } label: {
-                        tabs[1].tabView
-                    }
-                    
-                }
+                }.frame(maxWidth: .infinity)
             }
+
             .frame(maxWidth: .infinity)
             .padding(.vertical, 35)
             .background(Color(UIColor.systemBackground))

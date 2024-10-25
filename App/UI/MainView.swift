@@ -12,8 +12,6 @@ import SwiftData
 
 struct MainView: View {
     
-
-    
 //    func initNutrient() {
 //        if (nutrients.isEmpty) {
 //            context.insert(Predefined.Nutrients.Protein)
@@ -30,9 +28,13 @@ struct MainView: View {
     var body: some View {
         NavigationView {
             AppTabView(selection: $tabSelection) {
-                Color.red
-                    .mainTabbarItem(tab: .home, selection: tabSelection)
+                // Nutrition Main View
+                NutritionMainView()
+                    .appTabBarItem(tab: .home, selection: tabSelection)
                 
+                // Misc View
+                MiscMenuView()
+                    .appTabBarItem(tab: .misc, selection: tabSelection)
             }
         }.onAppear {
 //            initNutrient()

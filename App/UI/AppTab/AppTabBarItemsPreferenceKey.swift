@@ -18,13 +18,13 @@ struct AppTabBarItemsPreferenceKey: PreferenceKey {
     }
 }
 
-struct MainTabBarItemViewModifier: ViewModifier {
+struct AppTabBarItemViewModifier: ViewModifier {
     
     // init
     let tab: AppTabBarItem
     let selection: AppTabBarItem
     
-    
+    // Content is the TabView.
     func body(content: Content) -> some View {
         Group {
             if selection == tab {
@@ -39,7 +39,7 @@ struct MainTabBarItemViewModifier: ViewModifier {
 }
 
 extension View {
-    func mainTabbarItem(tab: AppTabBarItem, selection: AppTabBarItem) -> some View {
-        modifier(MainTabBarItemViewModifier(tab: tab, selection: selection))
+    func appTabBarItem(tab: AppTabBarItem, selection: AppTabBarItem) -> some View {
+        modifier(AppTabBarItemViewModifier(tab: tab, selection: selection))
     }
 }
