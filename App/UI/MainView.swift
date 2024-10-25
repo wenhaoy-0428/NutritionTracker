@@ -9,7 +9,6 @@ import SwiftUI
 import SwiftData
 
 
-
 struct MainView: View {
     @Environment(\.modelContext) var context
     @Query var nutrients: [Nutrient]

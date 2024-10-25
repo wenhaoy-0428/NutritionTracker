@@ -27,7 +27,7 @@ struct AppTabBarView: View {
                         }
                         Spacer()
                     }
-                }.frame(maxWidth: .infinity).padding(5)
+                }.frame(maxWidth: .infinity).padding(Edge.Set([.top]), 5)
             }
             .frame(maxWidth: .infinity)
             .padding(.vertical, 35)
