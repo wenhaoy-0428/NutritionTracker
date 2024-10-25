@@ -8,6 +8,7 @@
 import Foundation
 import SwiftUI
 
+// https://www.youtube.com/watch?v=FxW9Dxt896U&t=1388s
 
 struct MainTabBarItemsPreferenceKey: PreferenceKey {
     static var defaultValue: [MainTabBarItem] = []
