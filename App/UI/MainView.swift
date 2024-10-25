@@ -26,10 +26,10 @@ struct MainView: View {
 //    }
     
 
-    @State var tabSelection: MainTabBarItem = .home
+    @State var tabSelection: AppTabBarItem = .home
     var body: some View {
         NavigationView {
-            MainTabView(selection: $tabSelection) {
+            AppTabView(selection: $tabSelection) {
                 Color.red
                     .mainTabbarItem(tab: .home, selection: tabSelection)
                 

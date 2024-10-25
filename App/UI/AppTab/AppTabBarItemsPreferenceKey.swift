@@ -1,5 +1,5 @@
 //
-//  MainTabBarItemsPreferenceKey.swift
+//  AppTabBarItemsPreferenceKey.swift
 //  App
 //
 //  Created by Wenhao Yan on 2024/10/24.
@@ -10,10 +10,10 @@ import SwiftUI
 
 // https://www.youtube.com/watch?v=FxW9Dxt896U&t=1388s
 
-struct MainTabBarItemsPreferenceKey: PreferenceKey {
-    static var defaultValue: [MainTabBarItem] = []
+struct AppTabBarItemsPreferenceKey: PreferenceKey {
+    static var defaultValue: [AppTabBarItem] = []
     
-    static func reduce(value: inout [MainTabBarItem], nextValue: () -> [MainTabBarItem]) {
+    static func reduce(value: inout [AppTabBarItem], nextValue: () -> [AppTabBarItem]) {
         value += nextValue()
     }
 }
@@ -21,8 +21,8 @@ struct MainTabBarItemsPreferenceKey: PreferenceKey {
 struct MainTabBarItemViewModifier: ViewModifier {
     
     // init
-    let tab: MainTabBarItem
-    let selection: MainTabBarItem
+    let tab: AppTabBarItem
+    let selection: AppTabBarItem
     
     
     func body(content: Content) -> some View {
@@ -34,12 +34,12 @@ struct MainTabBarItemViewModifier: ViewModifier {
                 Color.clear.frame(width: 0, height: 0)
                     .background(.green)
             }
-        }.preference(key: MainTabBarItemsPreferenceKey.self, value: [tab])
+        }.preference(key: AppTabBarItemsPreferenceKey.self, value: [tab])
     }
 }
 
 extension View {
-    func mainTabbarItem(tab: MainTabBarItem, selection: MainTabBarItem) -> some View {
+    func mainTabbarItem(tab: AppTabBarItem, selection: AppTabBarItem) -> some View {
         modifier(MainTabBarItemViewModifier(tab: tab, selection: selection))
     }
 }

@@ -1,5 +1,5 @@
 //
-//  MainTabBarView.swift
+//  AppTabBarView.swift
 //  App
 //
 //  Created by Wenhao Yan on 2024/10/25.
@@ -7,9 +7,9 @@
 
 import SwiftUI
 
-struct MainTabBarView: View {
-    let tabs: [MainTabBarItem]
-    @Binding var selection: MainTabBarItem
+struct AppTabBarView: View {
+    let tabs: [AppTabBarItem]
+    @Binding var selection: AppTabBarItem
     
     var body: some View {
         if !tabs.isEmpty {

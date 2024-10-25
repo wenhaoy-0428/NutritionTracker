@@ -1,5 +1,5 @@
 //
-//  MainTabView.swift
+//  AppTabView.swift
 //  App
 //
 //  Created by Wenhao Yan on 2024/10/19.
@@ -7,14 +7,14 @@
 
 import SwiftUI
 
-struct MainTabView<Content: View>: View {
+struct AppTabView<Content: View>: View {
     
     @State private var index: Int = 0
-    @State private var tabs: [MainTabBarItem] = []
-    @Binding var selection: MainTabBarItem
+    @State private var tabs: [AppTabBarItem] = []
+    @Binding var selection: AppTabBarItem
     private let content: Content
     
-    init(selection: Binding<MainTabBarItem>, @ViewBuilder content: () -> Content) {
+    init(selection: Binding<AppTabBarItem>, @ViewBuilder content: () -> Content) {
         self._selection = selection
         self.content = content()
     }
@@ -30,11 +30,11 @@ struct MainTabView<Content: View>: View {
                 
 //                Spacer()
                 // TabBar
-                MainTabBarView(tabs: tabs, selection: $selection)
+                AppTabBarView(tabs: tabs, selection: $selection)
             }
             .ignoresSafeArea(.all, edges: .bottom)
         } // Listen to PreferenceKey to update registered tabs
-        .onPreferenceChange(MainTabBarItemsPreferenceKey.self) { value in
+        .onPreferenceChange(AppTabBarItemsPreferenceKey.self) { value in
             self.tabs = value
         }
     }
@@ -42,10 +42,10 @@ struct MainTabView<Content: View>: View {
 
 
 #Preview {
-    @Previewable @State var selection: MainTabBarItem = .home
-    let tabs: [MainTabBarItem] = [.home, .misc]
+    @Previewable @State var selection: AppTabBarItem = .home
+    let tabs: [AppTabBarItem] = [.home, .misc]
     
-    MainTabView(selection: $selection) {
+    AppTabView(selection: $selection) {
         Color.red
             .mainTabbarItem(tab: .home, selection: selection)
         
