@@ -10,10 +10,14 @@ import SwiftData
 
 @main
 struct AppApp: App {
+    
+    @State var G_AppErrorDispatcher = AppErrorDispatcher()
+    
     var body: some Scene {
         WindowGroup {
             MainView()
                 .modelContainer(for: [Intake.self, Nutrient.self, Food.self])
+                .environment(G_AppErrorDispatcher)
         }
     }
 }

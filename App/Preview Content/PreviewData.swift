@@ -55,6 +55,15 @@ class DataController {
             container.mainContext.insert(calcium)
             container.mainContext.insert(potassium)
             container.mainContext.insert(phosphorus)
+            
+            
+            // Foods
+            var apple: Food = Food(name: "Apple", information: "This is an apple", nutrition: [.protein:3], icon: "apple.logo", group: .fruit)
+            var banana: Food = Food(name: "Banana", information: "This is a banana", nutrition: [.protein:2], icon: "apple.logo", group: .fruit)
+            
+            container.mainContext.insert(apple)
+            container.mainContext.insert(banana)
+            
             return container
         } catch {
             fatalError("Failed to create model container for previewing: \(error.localizedDescription)")
