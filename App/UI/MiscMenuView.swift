@@ -13,7 +13,7 @@ struct MiscMenuView: View {
             Section(header: Text("Food")) {
                 HStack {
                     NavigationLink {
-                        Text("hello")
+//                        FoodListView()
                     } label: {
                         Image("nutrition")
                             .resizable()
