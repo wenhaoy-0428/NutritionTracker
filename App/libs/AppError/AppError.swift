@@ -9,11 +9,13 @@ import Foundation
 import OSLog
 
 // Auto Logger
-struct AppError: Error {
-    let error: AppLocalizedError
+struct AppError: Identifiable {
+    var id: UUID = UUID()
+    
+    let error: any AppLocalizedError
     private var logger: Logger = Logger()
     
-    init(error: AppLocalizedError, logger: Logger? = nil, debugInfo: String? = nil) {
+    init(error: any AppLocalizedError, logger: Logger? = nil, debugInfo: String? = nil) {
         self.error = error
         if let logger {
             self.logger = logger

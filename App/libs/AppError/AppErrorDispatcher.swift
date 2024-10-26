@@ -8,14 +8,12 @@ import Foundation
 
 @Observable
 class AppErrorDispatcher {
-    private(set) var activeError: AppLocalizedError? = nil
+    var activeError: AppError? = nil
     
-    var active: Bool {
-        activeError != nil
-    }
+    var active = false
     
     func dispatchError(_ appError: AppError) {
-        activeError = appError.error
+        activeError = appError
     }
     
     func clearError() {

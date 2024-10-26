@@ -12,7 +12,11 @@ struct FoodNutritionFactView: View {
     
     let food: Food
     @Query var nutrients: [Nutrient]
+    @Environment(AppErrorDispatcher.self) var G_AppErrorDispatcher
     
+    init(for food: Food) {
+        self.food = food
+    }
     
     var body: some View {
         VStack(alignment: .leading, spacing: 3) {
@@ -125,11 +129,20 @@ struct FoodNutritionFactView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
     }
     
-    func rowView(for category: Nutrient.NutrientCategory, value: Double?, isBold: Bool?) -> some View {
+    
+    
+    func rowView(for category: Nutrient.NutrientCategory, value: Double?, isBold: Bool?)  -> some View {
         
-        let nutrient = nutrients.filter { $0.category == category }[0]
+        // Extract current processing nutrient
+        guard let nutrient = nutrients.filter({ $0.category == category }).first else {
+            
+            // dispatch Error
+            G_AppErrorDispatcher.dispatchError(AppError(error: DataError.PredefinedDataMismatch, debugInfo: "Error accessing nutrient \(category.rawValue)"))
+            
+            return AnyView(EmptyView())
+        }
         
-        return HStack {
+        return AnyView(HStack {
             if category == .trans_fat {
                 Text("Trans")
                     .italic()
@@ -150,12 +163,12 @@ struct FoodNutritionFactView: View {
             if category == .added_sugars {
                 Text("Added Sugars")
             }
-
+            
             Spacer()
             Text("\("--")%")
                 .font(.headline)
                 .fontWeight(.heavy)
-        }
+        })
     }
     enum DividerSize {
         case slim
@@ -184,6 +197,6 @@ struct FoodNutritionFactView: View {
 
 #Preview {
     let food = Food(name: "Apple", information: "This is an apple", nutrition: [.calorie:10], icon: "", group: .fruit)
-    FoodNutritionFactView(food: food)
-        .modelContainer(DataController.previewContainer)
+    FoodNutritionFactView(for: food)
+        .appPreviewSetUp()
 }

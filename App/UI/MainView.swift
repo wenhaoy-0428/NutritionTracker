@@ -11,6 +11,8 @@ import SwiftData
 
 struct MainView: View {
     @Environment(\.modelContext) var context
+    @Environment(AppErrorDispatcher.self) var G_AppErrorDispatcher
+
     @Query var nutrients: [Nutrient]
     @Query var foods: [Food]
     
@@ -28,6 +30,8 @@ struct MainView: View {
 
     @State var tabSelection: AppTabBarItem = .main
     var body: some View {
+        // Create a bindable
+        @Bindable var appErrorDispatcher = G_AppErrorDispatcher
         NavigationView {
             AppTabView(selection: $tabSelection) {
                 // Nutrition Main View
@@ -40,8 +44,9 @@ struct MainView: View {
             }
         }.onAppear {
             initNutrient()
+        }.sheet(item: $appErrorDispatcher.activeError, onDismiss: appErrorDispatcher.clearError) { apperror in
+            ErrorView(for: apperror)
         }
-        
     }
 }
 
@@ -49,5 +54,5 @@ struct MainView: View {
 
 #Preview {
     MainView()
-        .modelContainer(DataController.previewContainer)
+        .appPreviewSetUp()
 }
