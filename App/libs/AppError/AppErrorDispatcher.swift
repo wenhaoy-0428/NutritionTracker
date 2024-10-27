@@ -10,7 +10,7 @@ import Foundation
 final class AppErrorDispatcher {
     static let shared = AppErrorDispatcher()
     var activeError: AppError? = nil
-    var active = false
+    var isActive = false
     
     
     private init() {}
@@ -20,12 +20,13 @@ final class AppErrorDispatcher {
     func dispatchError(_ appError: AppError) {
         queue.async {
             self.activeError = appError
+            self.isActive = true
         }
     }
     
     func clearError() {
         queue.async {
-            self.activeError = nil
+            self.isActive = false
         }
     }
 }
