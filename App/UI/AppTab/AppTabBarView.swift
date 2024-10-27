@@ -7,35 +7,41 @@
 
 import SwiftUI
 
-struct AppTabBarView: View {
-    let tabs: [AppTabBarItem]
-    @Binding var selection: AppTabBarItem
+struct AppTabBarView<Content: View>: View {
+    let content: Content
+    
+    init(_ content: Content) {
+        self.content = content
+    }
     
     var body: some View {
-        if !tabs.isEmpty {
-            ZStack {
-                InsertTabBarItem()
-                    .offset(y: -30)
-                
-                HStack(spacing: 25) {
+        ZStack(alignment: .top) {
+            Color(UIColor.systemBackground)
+                .ignoresSafeArea()
+                .padding(Edge.Set([.top]), 35)
+
+            ZStack(alignment: .top) {
+                Color(UIColor.systemBackground)
+                        .clipShape(ArcShape())
+                    
+                HStack {
+                    // SPACER in combine with the additional spacer
+                    // defined in AppTab
                     Spacer()
-                    ForEach(tabs, id: \.self) { tab in
-                        AppTabBarItemView(selected: selection == tab) {
-                            selection = tab
-                        } label: {
-                            tab.tabView
-                        }
-                        Spacer()
-                    }
-                }.frame(maxWidth: .infinity).padding(Edge.Set([.top]), 5)
+                    self.content
+                    // Spacer() in AppTab
+                }.frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .padding(Edge.Set([.top]), 35)
+        
+                InsertTabBarItem()
+                    .offset(y: 10)
             }
-            .frame(maxWidth: .infinity)
-            .padding(.vertical, 35)
-            .background(Color(UIColor.systemBackground))
-            .clipShape(ArcShape())
         }
+        
+        .frame(maxHeight: 100)
     }
 }
+
 
 struct ArcShape: Shape {
     func path(in rect: CGRect) -> Path {
@@ -50,11 +56,10 @@ struct ArcShape: Shape {
 }
 
 #Preview {
-    let tabs: [AppTabBarItem] = [.main, .misc]
     VStack {
         Spacer()
-        AppTabBarView(tabs: tabs, selection: .constant(.main))
+        AppTabBarView(Text("hello"))
     }
-    .ignoresSafeArea()
-    .background(Color.red)
+    .background(.green)
+    
 }

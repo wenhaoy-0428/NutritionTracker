@@ -5,6 +5,8 @@
 //  Created by Wenhao Yan on 2024/10/25.
 //
 
+
+/*
 import SwiftUI
 
 @Observable
@@ -45,7 +47,7 @@ struct TabBarItemViewModifier: ViewModifier {
 }
 
 extension View {
-    func tabBarItem(tab: TestTabBarItem.Item) -> some View {
+    func testTabBarItem(tab: TestTabBarItem.Item) -> some View {
         modifier(TabBarItemViewModifier(tab: tab))
     }
 }
@@ -56,6 +58,7 @@ extension View {
 
     HStack {
         Text("Hello, world!")
-            .tabBarItem(tab: tab)
+            .testTabBarItem(tab: tab)
     }.environment(tabItem)
 }
+**/

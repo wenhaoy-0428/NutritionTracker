@@ -32,15 +32,20 @@ struct MainView: View {
     var body: some View {
         // Create a bindable
         @Bindable var appErrorDispatcher = G_AppErrorDispatcher
-        NavigationView {
-            AppTabView(selection: $tabSelection) {
-                // Nutrition Main View
-                NutritionMainView()
-                    .appTabBarItem(tab: .main, selection: tabSelection)
-                
-                // Misc View
-                MiscMenuView()
-                    .appTabBarItem(tab: .misc, selection: tabSelection)
+        NavigationStack {
+//            TestAppTabView(selection: $tabSelection) {
+//                // Nutrition Main View
+//                NutritionMainView()
+//                    .appTabBarItem(tab: .main, selection: tabSelection)
+//                
+//                // Misc View
+//                MiscMenuView()
+//                    .appTabBarItem(tab: .misc, selection: tabSelection)
+//            }
+            AppTab(value: "1") {
+                Text("Content")
+            } label: {
+                Text("Label")
             }
         }.onAppear {
             initNutrient()

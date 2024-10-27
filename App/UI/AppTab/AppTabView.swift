@@ -2,58 +2,75 @@
 //  AppTabView.swift
 //  App
 //
-//  Created by Wenhao Yan on 2024/10/19.
+//  Created by Wenhao Yan on 2024/10/25.
 //
 
 import SwiftUI
 
-struct AppTabView<Content: View>: View {
+
+
+struct AppTabView<SelectionValue: Hashable, Content: View>: View {
     
-    @State private var index: Int = 0
-    @State private var tabs: [AppTabBarItem] = []
-    @Binding var selection: AppTabBarItem
-    private let content: Content
     
-    init(selection: Binding<AppTabBarItem>, @ViewBuilder content: () -> Content) {
-        self._selection = selection
+    @Binding var selection: SelectionValue
+    @State var appTabViewCore: AppTabViewCore<AnyHashable, AnyView> = AppTabViewCore()
+    // TabItems
+    let content: Content
+    
+    init(selection: Binding<SelectionValue>, @ViewBuilder content: () -> Content) {
         self.content = content()
+        self._selection = selection
     }
 
     var body: some View {
-        ZStack {
+        ZStack(alignment: .bottom) {
+//            Color.clear
             Color(UIColor.secondarySystemBackground)
                 .ignoresSafeArea()
-            ZStack(alignment: .bottom) {
-                // Content
-                content
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                // TabBar
-                AppTabBarView(tabs: tabs, selection: $selection)
+            ZStack {
+                Color(UIColor.secondarySystemBackground)
+                appTabViewCore.keyView[selection]
             }
-            .ignoresSafeArea(.all, edges: .bottom)
-        } // Listen to PreferenceKey to update registered tabs
-        .onPreferenceChange(AppTabBarItemsPreferenceKey.self) { value in
-            self.tabs = value
-        }
+            // NOTE: AppTabViewCor is only available when TabBarItem renders
+            AppTabBarView(content)
+                .ignoresSafeArea()
+                .environment(\.appTabViewCore, appTabViewCore)
+        }.background(Color.red)
     }
 }
 
-
 #Preview {
-    @Previewable @State var selection: AppTabBarItem = .main
-    let tabs: [AppTabBarItem] = []
-    
-    AppTabView(selection: $selection) {
-        Color.red
-            .appTabBarItem(tab: .main, selection: selection)
+    AppTabView(selection: .constant(1)) {
+        AppTab (value: 1) {
+            Text("content")
+        } label: {
+            Text("Label")
+        }
+        Text("")
         
-        Color.green
-            .appTabBarItem(tab: .misc, selection: selection)
+        AppTab (value: 2) {
+            Group {
+                Text("content")
+
+            }
+        } label: {
+            Text("Label")
+            Spacer()
+        }
+        Text("")
         
-        Color.green
-            .appTabBarItem(tab: .misc, selection: selection)
+        AppTab (value: 3) {
+            Text("content")
+        } label: {
+            Text("Label")
+        }
         
-        Color.green
-            .appTabBarItem(tab: .misc, selection: selection)
-    }
+        AppTab (value: 2) {
+            Text("content")
+        } label: {
+            Text("Label")
+        }
+        Text("")
+        Text("")
+    }.appPreviewSetUp()
 }
