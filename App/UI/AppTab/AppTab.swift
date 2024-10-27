@@ -42,7 +42,7 @@ struct AppTab<Value: Hashable, Content: View, Label: View>: View {
             appErrorDispatcher.activeError = AppError(error: UIError.EnvironmentVariableNotFound, debugInfo: "AppTabViewCore is not available. Tab may be used outside of a TabView")
             return
         }
-        core.keyView[self.value] = AnyView(self.content)
+        core.updateKeyView(key: self.value, view: self.content)
     }
     
     func isSelected() -> Bool {
@@ -50,7 +50,7 @@ struct AppTab<Value: Hashable, Content: View, Label: View>: View {
             appErrorDispatcher.activeError = AppError(error: UIError.EnvironmentVariableNotFound, debugInfo: "AppTabViewCore is not available. Tab may be used outside of a TabView")
             return false
         }
-        return core.selection == AnyHashable(value)
+        return core.isValueSelected(value)
     }
     
     func selectTab() {
@@ -59,7 +59,7 @@ struct AppTab<Value: Hashable, Content: View, Label: View>: View {
             appErrorDispatcher.activeError = AppError(error: UIError.EnvironmentVariableNotFound, debugInfo: "AppTabViewCore is not available. Tab may be used outside of a TabView")
             return
         }
-        core.selection = AnyHashable(value)
+        core.setSelection(value)
     }
 }
 
