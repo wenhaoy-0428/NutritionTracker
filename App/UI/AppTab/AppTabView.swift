@@ -37,7 +37,9 @@ struct AppTabView<SelectionValue: Hashable, Content: View>: View {
                 .environment(core)
         }.background(Color.red)
             .onAppear {
-                core.selection = self.defaultSelection
+                if core.selection == nil {
+                    core.selection = self.defaultSelection
+                }
             }
     }
     
@@ -62,37 +64,47 @@ struct AppTabView<SelectionValue: Hashable, Content: View>: View {
 }
 
 #Preview {
-    AppTabView(selection: .constant(1)) {
-        AppTab (value: 1) {
-            Text("content1")
-        } label: {
-            Text("Label")
-        }
-        Text("")
-        
-        AppTab (value: 2) {
-            Group {
-                Text("content2")
-
+    NavigationStack {
+        AppTabView(selection: .constant(1)) {
+            AppTab (value: 1) {
+                List {
+                    NavigationLink {
+                        Text("nest")
+                    } label: {
+                        Text("content1")
+                    }
+                }
+                    .navigationTitle(Text("title1"))
+            } label: {
+                Text("Label")
             }
-        } label: {
-            Text("Label")
-            Spacer()
+            Text("")
+            
+            AppTab (value: 2) {
+                
+                Text("content2")
+                    .navigationTitle(Text("title2"))
+            } label: {
+                Text("Label")
+                Spacer()
+            }
+            Text("")
+            
+            AppTab (value: 3) {
+                Text("content3")
+                    .navigationTitle(Text("title3"))
+            } label: {
+                Text("Label")
+            }
+            
+            AppTab (value: 4) {
+                Text("content4")
+                    .navigationTitle(Text("title4"))
+            } label: {
+                Text("Label")
+            }
+            Text("")
+            Text("")
         }
-        Text("")
-        
-        AppTab (value: 3) {
-            Text("content3")
-        } label: {
-            Text("Label")
-        }
-        
-        AppTab (value: 4) {
-            Text("content4")
-        } label: {
-            Text("Label")
-        }
-        Text("")
-        Text("")
     }.appPreviewSetUp()
 }

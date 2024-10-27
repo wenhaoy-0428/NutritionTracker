@@ -54,7 +54,6 @@ struct AppTab<Value: Hashable, Content: View, Label: View>: View {
     }
     
     func selectTab() {
-        print("Called")
         guard let core = appTabViewCore else {
             appErrorDispatcher.activeError = AppError(error: UIError.EnvironmentVariableNotFound, debugInfo: "AppTabViewCore is not available. Tab may be used outside of a TabView")
             return
@@ -62,8 +61,6 @@ struct AppTab<Value: Hashable, Content: View, Label: View>: View {
         core.setSelection(value)
     }
 }
-
-
 
 @Observable
 class Temp {

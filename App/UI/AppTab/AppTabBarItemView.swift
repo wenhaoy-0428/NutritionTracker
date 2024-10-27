@@ -7,16 +7,6 @@
 
 import SwiftUI
 
-enum AppTabBarItem{
-    case main, misc
-    
-    @ViewBuilder var tabView: some View {
-        switch self {
-        case .main: MainTabBarItem()
-        case .misc: MiscTabBarItem()
-        }
-    }
-}
 
 
 struct AppTabItemView<Content: View>: View{

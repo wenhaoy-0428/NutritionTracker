@@ -24,7 +24,8 @@ struct NutritionMainView: View {
                     NutritionCardView(for: nutrient, intakes: intakes)
                 }
             }.padding(5)
-        }
+        }.toolbarVisibility(.hidden, for: .navigationBar)
+        // NOTE: toolBarVisibility used to get avoid of the abnormal behavior of NavigationBar sliding from top on appear for other view.
     }
 }
 

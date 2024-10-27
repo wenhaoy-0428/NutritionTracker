@@ -27,25 +27,28 @@ struct MainView: View {
         }
     }
     
+    enum AppTabBarItem{
+        case main, misc
+    }
 
-//    @State var tabSelection: AppTabBarItem = .main
+    @State var tab: AppTabBarItem = .main
     var body: some View {
         // Create a bindable
         @Bindable var appErrorDispatcher = G_AppErrorDispatcher
         NavigationStack {
-//            TestAppTabView(selection: $tabSelection) {
-//                // Nutrition Main View
-//                NutritionMainView()
-//                    .appTabBarItem(tab: .main, selection: tabSelection)
-//                
-//                // Misc View
-//                MiscMenuView()
-//                    .appTabBarItem(tab: .misc, selection: tabSelection)
-//            }
-            AppTab(value: "1") {
-                Text("Content")
-            } label: {
-                Text("Label")
+            AppTabView(selection: $tab) {
+                // Nutrition Main View
+                AppTab(value: AppTabBarItem.main) {
+                    NutritionMainView()
+                } label: {
+                    MainTabBarItem()
+                }
+
+                AppTab(value: AppTabBarItem.misc) {
+                    MiscMenuView()
+                } label: {
+                    MiscTabBarItem()
+                }
             }
         }.onAppear {
             initNutrient()
