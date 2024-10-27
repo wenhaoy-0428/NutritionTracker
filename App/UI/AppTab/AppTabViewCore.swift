@@ -9,12 +9,7 @@ import Foundation
 import SwiftUI
 
 @Observable
-class AppTabViewCore<SelectedValue: Hashable, Content: View> {
-    var keyView: [SelectedValue: Content] = [:]
-    var NMD = 10
-}
-
-// Provide default Env for AppTabCore
-extension EnvironmentValues {
-    @Entry var appTabViewCore: AppTabViewCore<AnyHashable, AnyView>? = nil
+class AppTabViewCore {
+    var keyView: [AnyHashable: AnyView] = [:]
+    var selection: AnyHashable? = nil
 }

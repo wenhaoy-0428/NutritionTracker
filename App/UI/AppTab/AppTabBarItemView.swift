@@ -19,7 +19,7 @@ enum AppTabBarItem{
 }
 
 
-struct AppTabBarItemView<Content: View>: View{
+struct AppTabItemView<Content: View>: View{
     
     let label: Content
     let selected: Bool
@@ -35,7 +35,7 @@ struct AppTabBarItemView<Content: View>: View{
         label
         .frame(height: 50)
         .clipped()
-        .foregroundStyle(selected ? Color.blue : Color.gray)
+        
         .onTapGesture {
             action()
         }
@@ -44,7 +44,7 @@ struct AppTabBarItemView<Content: View>: View{
 
 #Preview {
     HStack {
-        AppTabBarItemView(selected: true) {
+        AppTabItemView(selected: true) {
             //
         } label: {
             MainTabBarItem()

@@ -12,7 +12,7 @@ struct AppTab<Value: Hashable, Content: View, Label: View>: View {
     let content: Content
     let label: Label
     let value: Value
-    @Environment(\.appTabViewCore) var appTabViewCore: AppTabViewCore?
+    @Environment(AppTabViewCore.self) var appTabViewCore: AppTabViewCore?
     @Environment(AppErrorDispatcher.self) var appErrorDispatcher
     
     init(value: Value, @ViewBuilder content: () -> Content, @ViewBuilder label: () -> Label) {
@@ -25,6 +25,10 @@ struct AppTab<Value: Hashable, Content: View, Label: View>: View {
     var body: some View {
         Group {
             self.label
+                .foregroundStyle(isSelected() ? Color.blue : Color.gray)
+                .onTapGesture {
+                    selectTab()
+                }
             // FOR EVEN PLACEMENT IN THE TAB BAR
             Spacer()
         }
@@ -40,6 +44,23 @@ struct AppTab<Value: Hashable, Content: View, Label: View>: View {
         }
         core.keyView[self.value] = AnyView(self.content)
     }
+    
+    func isSelected() -> Bool {
+        guard let core = appTabViewCore else {
+            appErrorDispatcher.activeError = AppError(error: UIError.EnvironmentVariableNotFound, debugInfo: "AppTabViewCore is not available. Tab may be used outside of a TabView")
+            return false
+        }
+        return core.selection == AnyHashable(value)
+    }
+    
+    func selectTab() {
+        print("Called")
+        guard let core = appTabViewCore else {
+            appErrorDispatcher.activeError = AppError(error: UIError.EnvironmentVariableNotFound, debugInfo: "AppTabViewCore is not available. Tab may be used outside of a TabView")
+            return
+        }
+        core.selection = AnyHashable(value)
+    }
 }
 
 
@@ -50,9 +71,19 @@ class Temp {
 }
 
 #Preview {
-    AppTab(value: "1") {
-        Text("Content")
-    } label: {
-        Text("Label")
+    var appTabViewCore: AppTabViewCore = AppTabViewCore()
+    HStack {
+        AppTab(value: "1") {
+            Text("Content")
+        } label: {
+            Text("Label")
+        }
+        
+        AppTab(value: "2") {
+            Text("Content")
+        } label: {
+            Text("Label2")
+        }
     }.appPreviewSetUp()
+        .environment(appTabViewCore)
 }

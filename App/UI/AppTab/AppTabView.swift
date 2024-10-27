@@ -12,14 +12,14 @@ import SwiftUI
 struct AppTabView<SelectionValue: Hashable, Content: View>: View {
     
     
-    @Binding var selection: SelectionValue
-    @State var appTabViewCore: AppTabViewCore<AnyHashable, AnyView> = AppTabViewCore()
+    @Binding var defaultSelection: SelectionValue
+    @State var core: AppTabViewCore = AppTabViewCore()
     // TabItems
     let content: Content
     
     init(selection: Binding<SelectionValue>, @ViewBuilder content: () -> Content) {
         self.content = content()
-        self._selection = selection
+        self._defaultSelection = selection
     }
 
     var body: some View {
@@ -29,20 +29,42 @@ struct AppTabView<SelectionValue: Hashable, Content: View>: View {
                 .ignoresSafeArea()
             ZStack {
                 Color(UIColor.secondarySystemBackground)
-                appTabViewCore.keyView[selection]
+                displayView()
             }
             // NOTE: AppTabViewCor is only available when TabBarItem renders
             AppTabBarView(content)
                 .ignoresSafeArea()
-                .environment(\.appTabViewCore, appTabViewCore)
+                .environment(core)
         }.background(Color.red)
+            .onAppear {
+                core.selection = self.defaultSelection
+            }
+    }
+    
+    func displayView() -> AnyView {
+        // User has selected one.
+        var res = AnyView(EmptyView())
+        if let userSelection = core.selection {
+            guard let view = core.keyView[userSelection] else {
+                // ERROR
+                return res
+            }
+            res = view
+        } else {
+            guard let view = core.keyView[self.defaultSelection] else {
+                // ERROR
+                return res
+            }
+            res = view
+        }
+        return res
     }
 }
 
 #Preview {
     AppTabView(selection: .constant(1)) {
         AppTab (value: 1) {
-            Text("content")
+            Text("content1")
         } label: {
             Text("Label")
         }
@@ -50,7 +72,7 @@ struct AppTabView<SelectionValue: Hashable, Content: View>: View {
         
         AppTab (value: 2) {
             Group {
-                Text("content")
+                Text("content2")
 
             }
         } label: {
@@ -60,13 +82,13 @@ struct AppTabView<SelectionValue: Hashable, Content: View>: View {
         Text("")
         
         AppTab (value: 3) {
-            Text("content")
+            Text("content3")
         } label: {
             Text("Label")
         }
         
-        AppTab (value: 2) {
-            Text("content")
+        AppTab (value: 4) {
+            Text("content4")
         } label: {
             Text("Label")
         }

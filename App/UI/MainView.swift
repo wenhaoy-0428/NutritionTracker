@@ -28,7 +28,7 @@ struct MainView: View {
     }
     
 
-    @State var tabSelection: AppTabBarItem = .main
+//    @State var tabSelection: AppTabBarItem = .main
     var body: some View {
         // Create a bindable
         @Bindable var appErrorDispatcher = G_AppErrorDispatcher

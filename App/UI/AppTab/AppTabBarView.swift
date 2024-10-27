@@ -9,7 +9,6 @@ import SwiftUI
 
 struct AppTabBarView<Content: View>: View {
     let content: Content
-    
     init(_ content: Content) {
         self.content = content
     }
