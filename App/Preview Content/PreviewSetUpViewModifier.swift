@@ -9,12 +9,11 @@ import Foundation
 import SwiftUI
 
 struct PreviewSetUpViewModifier: ViewModifier {
-    @State var G_AppErrorDispatcher = AppErrorDispatcher()
+    @State var G_AppErrorDispatcher = AppErrorDispatcher.shared
     
     func body(content: Content) -> some View {
         content
             .modelContainer(DataController.previewContainer)
-            .environment(G_AppErrorDispatcher)
     }
 }
 

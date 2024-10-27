@@ -12,7 +12,6 @@ struct FoodNutritionFactView: View {
     
     let food: Food
     @Query var nutrients: [Nutrient]
-    @Environment(AppErrorDispatcher.self) var G_AppErrorDispatcher
     
     init(for food: Food) {
         self.food = food
@@ -137,7 +136,7 @@ struct FoodNutritionFactView: View {
         guard let nutrient = nutrients.filter({ $0.category == category }).first else {
             
             // dispatch Error
-            G_AppErrorDispatcher.dispatchError(AppError(error: DataError.PredefinedDataMismatch, debugInfo: "Error accessing nutrient \(category.rawValue)"))
+            AppErrorDispatcher.shared.dispatchError(AppError(error: DataError.PredefinedDataMismatch, debugInfo: "Error accessing nutrient \(category.rawValue)"))
             
             return AnyView(EmptyView())
         }

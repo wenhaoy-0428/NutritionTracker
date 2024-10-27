@@ -13,7 +13,6 @@ struct AppTab<Value: Hashable, Content: View, Label: View>: View {
     let label: Label
     let value: Value
     @Environment(AppTabViewCore.self) var appTabViewCore: AppTabViewCore?
-    @Environment(AppErrorDispatcher.self) var appErrorDispatcher
     
     init(value: Value, @ViewBuilder content: () -> Content, @ViewBuilder label: () -> Label) {
         self.content = content()
@@ -39,15 +38,15 @@ struct AppTab<Value: Hashable, Content: View, Label: View>: View {
     
     func updateAppTabViewCore() {
         guard let core = appTabViewCore else {
-            appErrorDispatcher.activeError = AppError(error: UIError.EnvironmentVariableNotFound, debugInfo: "AppTabViewCore is not available. Tab may be used outside of a TabView")
-            return
+            AppErrorDispatcher.shared.dispatchError(AppError(error: UIError.EnvironmentVariableNotFound, debugInfo: "AppTabViewCore is not available. Tab may be used outside of a TabView"))
+           return
         }
         core.updateKeyView(key: self.value, view: self.content)
     }
     
     func isSelected() -> Bool {
         guard let core = appTabViewCore else {
-            appErrorDispatcher.activeError = AppError(error: UIError.EnvironmentVariableNotFound, debugInfo: "AppTabViewCore is not available. Tab may be used outside of a TabView")
+            AppErrorDispatcher.shared.dispatchError(AppError(error: UIError.EnvironmentVariableNotFound, debugInfo: "AppTabViewCore is not available. Tab may be used outside of a TabView"))
             return false
         }
         return core.isValueSelected(value)
@@ -55,16 +54,11 @@ struct AppTab<Value: Hashable, Content: View, Label: View>: View {
     
     func selectTab() {
         guard let core = appTabViewCore else {
-            appErrorDispatcher.activeError = AppError(error: UIError.EnvironmentVariableNotFound, debugInfo: "AppTabViewCore is not available. Tab may be used outside of a TabView")
+            AppErrorDispatcher.shared.dispatchError(AppError(error: UIError.EnvironmentVariableNotFound, debugInfo: "AppTabViewCore is not available. Tab may be used outside of a TabView"))
             return
         }
         core.setSelection(value)
     }
-}
-
-@Observable
-class Temp {
-    var temp: Int = 1
 }
 
 #Preview {

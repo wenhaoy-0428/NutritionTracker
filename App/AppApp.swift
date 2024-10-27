@@ -11,13 +11,16 @@ import SwiftData
 @main
 struct AppApp: App {
     
-    @State var G_AppErrorDispatcher = AppErrorDispatcher()
+    @State var G_AppErrorDispatcher = AppErrorDispatcher.shared
     
     var body: some Scene {
         WindowGroup {
+            @Bindable var appErrorDispatcher = G_AppErrorDispatcher
             MainView()
                 .modelContainer(for: [Intake.self, Nutrient.self, Food.self])
-                .environment(G_AppErrorDispatcher)
+                .sheet(item: $appErrorDispatcher.activeError) { apperror in
+                    ErrorView(for: apperror)
+                }
         }
     }
 }
