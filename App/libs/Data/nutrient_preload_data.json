@@ -1,0 +1,198 @@
+[
+  {
+    "category": "protein",
+    "icon": "protein",
+    "information": [
+      "Protein is mainly used for growth and body repair.",
+      "When there is an insufficient intake of energy, protein would be broken down and used as body fuel, which may lead to protein-energy malnutrition.",
+      "One gram of protein provides 4 kcal.",
+      "Contributes 10%-15% of daily energy intake.",
+      "Recommended intake: 0.83g/kg body weight/day."
+    ],
+    "targetIntake": 54,
+    "unit": "g",
+    "maxPerIntake": 100,
+    "sources": ["Meat", "Milk", "Eggs"]
+  },
+  {
+    "category": "calorie",
+    "icon": "calorie",
+    "information": [
+      "Kilocalorie (kcal) is commonly used in measuring food energy.",
+      "One kilocalorie is the amount of energy needed to raise the temperature of 1kg of water by 1°C."
+    ],
+    "targetIntake": 2400,
+    "unit": "kcal",
+    "maxPerIntake": 3000,
+    "sources": []
+  },
+  {
+    "category": "total carbohydrate",
+    "icon": "total_carbohydrate",
+    "information": [
+      "Carbohydrate is the major energy source in an average diet, which is also the preferred fuel.",
+      "One gram of carbohydrate provides 4 kcal.",
+      "Carbohydrate can be divided into three main types: monosaccharides, disaccharides and complex carbohydrate (starches and dietary fibres).",
+      "Contributes 55%-75% of daily energy intake."
+    ],
+    "targetIntake": 2400,
+    "unit": "g",
+    "maxPerIntake": 3000,
+    "sources": ["Rice", "Bread", "Pasta"]
+  },
+  {
+    "category": "total sugars",
+    "icon": "total_sugars",
+    "information": ["Sugars are simple carbohydrates, technically referring to monosaccharides and disaccharides."],
+    "targetIntake": 2400,
+    "unit": "g",
+    "maxPerIntake": 3000,
+    "sources": ["Honey", "Syrups", "Molasses"]
+  },
+  {
+    "category": "added sugars",
+    "icon": "added_sugars",
+    "information": [
+      "Added sugars specifically refers to sugars that are added to foods during processing or preparation that are not naturally occurring."
+    ],
+    "targetIntake": 2400,
+    "unit": "g",
+    "maxPerIntake": 3000,
+    "sources": []
+  },
+  {
+    "category": "total fat",
+    "icon": "total_fat",
+    "information": [
+      "Fat is a concentrated energy source, which provides 9 kcal for each gram of fat.",
+      "Excess fat intake has been linked to major health problems, including an increased risk of heart disease, obesity, hypertension, diabetes and certain types of cancers.",
+      "A range of 15%-30% of total energy has also been recommended for preventing non-communicable diseases."
+    ],
+    "targetIntake": 2400,
+    "unit": "g",
+    "maxPerIntake": 3000,
+    "sources": ["Butter", "Cheese", "Nuts"]
+  },
+  {
+    "category": "saturated fat",
+    "icon": "saturated_fat",
+    "information": ["Excess saturated fat intake has been linked to increased risk of heart disease."],
+    "targetIntake": 2400,
+    "unit": "g",
+    "maxPerIntake": 3000,
+    "sources": ["Butter", "Coconut oil", "Animal fats"]
+  },
+  {
+    "category": "trans fat",
+    "icon": "trans_fat",
+    "information": [
+      "Trans fat is also known as \"trans fatty acids.\"",
+      "It is a specific type of fat formed when liquid oils are made into solid fats, a process known as \"hydrogenation\".",
+      "Contributes not more than 1% of daily energy intake."
+    ],
+    "targetIntake": 2400,
+    "unit": "g",
+    "maxPerIntake": 3000,
+    "sources": ["Hydrogenated vegetable oil", "Margarine"]
+  },
+  {
+    "category": "trans fat",
+    "icon": "trans_fat",
+    "information": [
+      "Trans fat is also known as \"trans fatty acids.\"",
+      "It is a specific type of fat formed when liquid oils are made into solid fats, a process known as \"hydrogenation\".",
+      "Contributes not more than 1% of daily energy intake."
+    ],
+    "targetIntake": 2400,
+    "unit": "g",
+    "maxPerIntake": 3000,
+    "sources": ["Hydrogenated vegetable oil", "Margarine"]
+  },
+  {
+    "category": "cholesterol",
+    "icon": "cholesterol",
+    "information": ["Cholesterol is one of the sterols. Sterol is a class of lipids.", "It can only be found in animal source."],
+    "targetIntake": 2400,
+    "unit": "g",
+    "maxPerIntake": 3000,
+    "sources": ["Egg yolk", "Offals", "Squids"]
+  },
+  {
+    "category": "calcium",
+    "icon": "calcium",
+    "information": [
+      "Calcium is a mineral necessary for providing rigidity to the skeleton.",
+      "It also plays roles in nerve transmission, muscle contraction, and blood clotting."
+    ],
+    "targetIntake": 2400,
+    "unit": "g",
+    "maxPerIntake": 3000,
+    "sources": ["Egg yolk", "Offals", "Squids"]
+  },
+  {
+    "category": "dietary fibre",
+    "icon": "dietary_fibre",
+    "information": ["Dietary fibre is the indigestible part found in plant.", "Not less than 25g per day."],
+    "targetIntake": 2400,
+    "unit": "g",
+    "maxPerIntake": 3000,
+    "sources": ["Cereals", "Vegetables", "Fruits"]
+  },
+  {
+    "category": "vitamin c",
+    "icon": "vitamin_c",
+    "information": ["Vitamin C is a water soluble vitamin.", "Not less than 45mg per day for adults."],
+    "targetIntake": 2400,
+    "unit": "g",
+    "maxPerIntake": 3000,
+    "sources": ["Fruits", "Vegetables"]
+  },
+  {
+    "category": "iron",
+    "icon": "iron",
+    "information": [
+      "Iron is necessary for metabolic functions such as oxygen transport and storage.",
+      "Women: Not less than 24.5mg per day; Men: Not less than 11.4mg per day."
+    ],
+    "targetIntake": 2400,
+    "unit": "g",
+    "maxPerIntake": 3000,
+    "sources": ["Liver and offal", "Beef", "Cereals"]
+  },
+  {
+    "category": "potassium",
+    "icon": "potassium",
+    "information": [
+      "Potassium is essential in maintaining the body's electrolyte balance and normal cellular function.",
+      "2.7g - 3.1g per day."
+    ],
+    "targetIntake": 2400,
+    "unit": "g",
+    "maxPerIntake": 3000,
+    "sources": ["Potatoes", "Fruit", "Milk and milk products"]
+  },
+  {
+    "category": "phosphorus",
+    "icon": "phosphorus",
+    "information": [
+      "Phosphorus is essential in regulating the body acid-base balance.",
+      "A safe range of intake has not been proposed by WHO/FAO."
+    ],
+    "targetIntake": 2400,
+    "unit": "g",
+    "maxPerIntake": 3000,
+    "sources": ["Processed foods", "Fish", "Meat"]
+  },
+  {
+    "category": "vitamin d",
+    "icon": "vitamin_d",
+    "information": [
+      "Promote the absorption of calcium and phosphorus by the body, promote bone growth and calcification, and promote dental health.",
+      "The normal range of vitamin D is 30-100ng/m."
+    ],
+    "targetIntake": 2400,
+    "unit": "g",
+    "maxPerIntake": 3000,
+    "sources": ["Fruit", "Vegetables"]
+  }
+]
