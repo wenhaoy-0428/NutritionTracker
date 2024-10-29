@@ -73,7 +73,7 @@ struct FoodNutritionFactView: View {
             divider(.slim)
             
             // dietary fiber
-            rowView(for: .dietary_fiber, value: food.nutrition[.dietary_fiber], isBold: false)
+            rowView(for: .dietary_fibre, value: food.nutrition[.dietary_fibre], isBold: false)
                 .padding(.leading)
             divider(.slim)
             
@@ -134,10 +134,8 @@ struct FoodNutritionFactView: View {
         
         // Extract current processing nutrient
         guard let nutrient = nutrients.filter({ $0.category == category }).first else {
-            
             // dispatch Error
             AppErrorDispatcher.shared.dispatchError(AppError(error: DataError.PredefinedDataMismatch, debugInfo: "Error accessing nutrient \(category.rawValue)"))
-            
             return AnyView(EmptyView())
         }
         

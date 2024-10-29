@@ -31,18 +31,18 @@ struct FoodUpdateView: View {
         if (foodName.isEmpty) {
             return false
         }
-        
-        if let protein = protein  {
-            if  protein > Predefined.Nutrients.Protein.maxPerInake {
-                return false
-            }
-        }
-        
-        if let calorie = calorie  {
-            if  calorie > Predefined.Nutrients.Calorie.maxPerInake  {
-                return false
-            }
-        }
+        // TODO: FIX
+//        if let protein = protein  {
+//            if  protein > Predefined.Nutrients.Protein.maxPerIntake {
+//                return false
+//            }
+//        }
+//        
+//        if let calorie = calorie  {
+//            if  calorie > Predefined.Nutrients.Calorie.maxPerIntake  {
+//                return false
+//            }
+//        }
         
         return true
     }
@@ -71,10 +71,11 @@ struct FoodUpdateView: View {
                 }
             }
             
-            Section {
-                NutrientInputField(value: $protein, for: Predefined.Nutrients.Protein)
-                NutrientInputField(value: $calorie, for: Predefined.Nutrients.Calorie)
-            }
+            // TODO: FIX
+//            Section {
+//                NutrientInputField(value: $protein, for: Predefined.Nutrients.Protein)
+//                NutrientInputField(value: $calorie, for: Predefined.Nutrients.Calorie)
+//            }
         }
         .navigationTitle(
             food != nil ? "Update Food" : "New Food"

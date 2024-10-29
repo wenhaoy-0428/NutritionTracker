@@ -8,25 +8,41 @@ import SwiftData
 
 
 @Model
-class Food {
+class Food: Decodable {
     @Attribute(.unique) var name: String
-    var information: String
-    var nutrition: [Nutrient.NutrientCategory: Double]
+//    var information: [String]
+    var nutrition: Dictionary<Nutrient.NutrientCategory, Double>
     var isFavorite: Bool = false
-    var icon: String
     var group: Group
     // in gram
+    var isPredefined: Bool = false
+    var imgString: String?
     
     init(name: String, information: String, nutrition: [Nutrient.NutrientCategory : Double], isFavorite: Bool? = false, icon: String, group: Group) {
         self.name = name
-        self.information = information
+//        self.information = information
         self.nutrition = nutrition
         if let isFavorite = isFavorite {
             self.isFavorite = isFavorite
         }
-        self.icon = icon
         self.group = group
     }
+    
+    required init(from decoder: any Decoder) throws {
+        let values = try decoder.container(keyedBy: CodingKeys.self)
+        name = try values.decode(String.self, forKey: .name)
+        imgString = try values.decode(String.self, forKey: .imgString)
+        nutrition = try values.decode(Dictionary<Nutrient.NutrientCategory, Double>.self, forKey: .nutrition)
+        isPredefined = true
+        group = try values.decode(Group.self, forKey: .group)
+    }
+    
+    enum CodingKeys: String, CodingKey {
+        case name
+        case nutrition
+        case imgString
+        case group
+     }        
 }
 
 extension Food {

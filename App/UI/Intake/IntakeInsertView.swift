@@ -58,9 +58,9 @@ struct IntakeInsertView: View {
                                 Text(sheetData.selectedFood?.name ?? "Food")
                                     .font(.largeTitle)
                                     .bold()
-                                if let information = sheetData.selectedFood?.information {
-                                    Text(information)
-                                }
+//                                if let information = sheetData.selectedFood?.information {
+//                                    Text(information)
+//                                }
                             }
                             .foregroundStyle(Color.white)
                             .frame(height: 80)

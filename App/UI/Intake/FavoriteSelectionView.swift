@@ -40,6 +40,6 @@ struct FavoriteSelectionView: View {
     }
 }
 
-#Preview {
-    FavoriteSelectionView(food: Predefined.Foods.Apple)
-}
+//#Preview {
+//    FavoriteSelectionView(food: Predefined.Foods.Apple)
+//}

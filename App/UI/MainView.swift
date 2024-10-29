@@ -14,17 +14,6 @@ struct MainView: View {
     @Query var nutrients: [Nutrient]
     @Query var foods: [Food]
     
-    func initNutrient() {
-        if (nutrients.isEmpty) {
-            context.insert(Predefined.Nutrients.Protein)
-            context.insert(Predefined.Nutrients.Calorie)
-        }
-        if foods.isEmpty {
-            context.insert(Predefined.Foods.Apple)
-            context.insert(Predefined.Foods.Banana)
-        }
-    }
-    
     enum AppTabBarItem{
         case main, misc
     }
@@ -46,8 +35,6 @@ struct MainView: View {
                     MiscTabBarItem()
                 }
             }
-        }.onAppear {
-            initNutrient()
         }
     }
 }

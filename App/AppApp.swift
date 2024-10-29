@@ -22,7 +22,7 @@ struct AppApp: App {
                             .interactiveDismissDisabled(true)
                     }
             }
-        }.modelContainer(for: [Intake.self, Nutrient.self, Food.self])
+        }.modelContainer(DataController.AppContainer)
         
     }
 }

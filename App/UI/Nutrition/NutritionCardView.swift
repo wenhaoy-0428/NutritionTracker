@@ -35,12 +35,14 @@ struct NutritionCardView: View {
                     .shadow(radius: 3, x: 0, y:2)
                 
                 VStack {
-                    HStack(spacing: 0) {
-                        Text(nutrient.icon)
+                    HStack(spacing: 3) {
+                        Image(nutrient.icon)
+                            .resizable()
+                            .scaledToFit()
                         Text(nutrient.category.rawValue.capitalized)
                             .font(.headline)
                         Spacer()
-                    }
+                    }.frame(height: 25)
                     Spacer()
                     progressBar
                 }

@@ -14,7 +14,7 @@ class DataController {
     static let AppContainer: ModelContainer = {
         
         do {
-            let container = try ModelContainer(for: Nutrient.self)
+            let container = try ModelContainer(for: Nutrient.self, Food.self)
             
             // Load Nutrients
             let nutrients = loadJSON("nutrient_preload_data", as: [Nutrient].self)
@@ -23,7 +23,10 @@ class DataController {
             }
             
             // Load Foods
-            
+            let foods = loadJSON("food_preload_data", as: [Food].self)
+            for food in foods {
+                container.mainContext.insert(food)
+            }
             
             try container.mainContext.save()
             return container
