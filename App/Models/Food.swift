@@ -56,4 +56,25 @@ extension Food {
         case meal
         case drink
     }
+    
+    var icon: String {
+        switch self.group {
+        case .meat:
+            return "meat-icon-food-group-"
+        case .fruit:
+            return "fruit-icon-food-group"
+        case .dairy:
+            return "dairy-icon-food-group"
+        case .drink:
+            return "drink-icon-food-group"
+        case .meal:
+            return "meal-icon-food-group"
+        case .protein:
+            return "protein-icon-food-group"
+        case .starch:
+            return "starch-icon-food-group"
+        case .vagetable:
+            return "veggie-icon-food-group"
+        }
+    }
 }

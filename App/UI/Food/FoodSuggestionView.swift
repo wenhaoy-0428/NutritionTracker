@@ -46,7 +46,10 @@ struct FoodSuggestionView: View {
         } else {
             ForEach (filteredFoods) {food in
                 HStack {
-                    Image(systemName: "apple.logo")
+                    Image(food.icon)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(height: 30)
                     Button {
                         sheetData.selectedFood = food
                         // Dismiss the search bar
@@ -78,5 +81,8 @@ struct FoodSuggestionView: View {
 }
 
 #Preview {
-    FoodSuggestionView(searchText: "Hello")
+    @Previewable var sheetData = SheetData()
+    FoodSuggestionView(searchText: "apple")
+        .appPreviewSetUp()
+        .environment(sheetData)
 }
