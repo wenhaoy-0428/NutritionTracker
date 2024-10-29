@@ -1,0 +1,26 @@
+[
+  {
+    "name": "Apples",
+    "nutrition": {
+      "calorie": 52,
+      "total fat": 0.17,
+      "saturated fat": 0.03,
+      "trans fat": 0,
+      "cholesterol": 0,
+      "sodium": 1,
+      "total carbohydrate": 13.8,
+      "dietary fibre": 2.4,
+      "total sugars": 10.4,
+      "added sugars": 0,
+      "protein": 0.26,
+      "vitamin c": 4.6,
+      "vitamin d": 0,
+      "iron": 0.12,
+      "calcium": 6,
+      "potassium": 107,
+      "phosphorus": 11
+    },
+    "group": "fruit",
+    "imgString": "apple"
+  }
+]

@@ -194,5 +194,19 @@
     "unit": "g",
     "maxPerIntake": 3000,
     "sources": ["Fruit", "Vegetables"]
+  },
+  {
+    "category": "sodium",
+    "icon": "vitamin_d",
+    "information": [
+      "Sodium is a major electrolyte in the body.",
+      "It helps in maintaining extracellular fluid balance.",
+      "Excess sodium intake has been linked to high blood pressure.",
+      "Not more than 2,000 mg (i.e. 5g of salt) per day."
+    ],
+    "targetIntake": 2000,
+    "unit": "mg",
+    "maxPerIntake": 3000,
+    "sources": ["Salt", "Soy sauce"]
   }
 ]
